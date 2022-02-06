@@ -1,0 +1,13 @@
+http://localhost:5011/swagger/index.html
+
+IdentityServer => http://localhost:5001
+Gateway => http://localhost:5000
+Web Uygulamasý => http://localhost:5010
+
+Services
+	-Catalog.API => http://localhost:5011
+	-PhotoStockAPI => http://localhost:5012
+	-BasketAPI => http://localhost:5013
+	-DiscountAPI => http://localhost:5014
+	-OrderAPI => http://localhost:5015
+	-FakePayment => http://localhost:5016
