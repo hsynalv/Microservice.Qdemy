@@ -9,8 +9,7 @@ namespace FreeCourse.Web.Models.Orders
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
 
-
-        public string BuyerId { get; set; }
+        public string UserId { get; set; }
 
         public List<OrderItemViewModel> OrderItems { get; set; }
     }

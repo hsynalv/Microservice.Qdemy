@@ -7,6 +7,6 @@ namespace FreeCourse.Services.Order.Application.DTOs
         public string CourseId { get; set; }
         public string CourseName { get; set; }
         public string PictureUrl { get; set; }
-        public Decimal Price { get; set; }
+        public decimal Price { get; set; }
     }
 }

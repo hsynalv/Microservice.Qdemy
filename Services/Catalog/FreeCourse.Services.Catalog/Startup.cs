@@ -1,6 +1,7 @@
 using FreeCourse.Services.Catalog.Service.Abstract;
 using FreeCourse.Services.Catalog.Service.Concrete;
 using FreeCourse.Services.Catalog.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,8 +33,24 @@ namespace FreeCourse.Services.Catalog
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddMassTransit(x =>
+            {
+                //DefaultPort 5672
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
+
             services.AddSingleton<ICategoryService, CategoryService>();
-            services.AddSingleton<ICourseService, CourseService>();
+            services.AddScoped<ICourseService, CourseService>();
 
 
             services.AddAutoMapper(typeof(Startup));
