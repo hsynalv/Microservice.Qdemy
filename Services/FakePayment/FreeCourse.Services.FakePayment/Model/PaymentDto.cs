@@ -1,4 +1,7 @@
-﻿namespace FreeCourse.Services.FakePayment.Model
+﻿using System;
+using System.Collections.Generic;
+
+namespace FreeCourse.Services.FakePayment.Model
 {
     public class PaymentDto
     {
@@ -7,5 +10,9 @@
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public decimal TotalPrice { get; set; }
+
+        public OrderDto Order { get; set; }
     }
+
+    
 }

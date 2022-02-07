@@ -1,7 +1,9 @@
+using FreeCourse.Services.Order.Application.Consumer;
 using FreeCourse.Services.Order.Application.DTOs;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Services.Abstract;
 using FreeCourse.Shared.Services.Concrete;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +32,32 @@ namespace FreeCourse.Services.OrderAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<CreateOrderMessageCommandConsumer>();
+
+                //DefaultPort 5672
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+
+                    cfg.ReceiveEndpoint("created-order-service", e =>
+                     {
+                         e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+                     });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
+
+
+
             services.AddDbContext<OrderDbContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), configure =>
