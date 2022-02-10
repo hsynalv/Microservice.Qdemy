@@ -20,8 +20,8 @@ namespace FreeCourse.Services.OrderAPI
 
             using (var scope = host.Services.CreateScope())
             {
-                var servieProvide = scope.ServiceProvider;
-                var dbContext = servieProvide.GetRequiredService<OrderDbContext>();
+                var serviceProvider = scope.ServiceProvider;
+                var dbContext = serviceProvider.GetRequiredService<OrderDbContext>();
                 dbContext.Database.Migrate();
             }
 
