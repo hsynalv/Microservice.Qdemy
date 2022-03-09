@@ -1,4 +1,4 @@
-# Projede Kullanılan Library ve Design'lar
+# Technologies used in the project
 
 
 - **Catalog API** => MongoDb
